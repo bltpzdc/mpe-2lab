@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>Lab 3</title>
+    <h:outputStylesheet library="css" name="main-parametres.css"/>
+</h:head>
+<h:body>
+    <div class="parametres-input">
+        <h:form>
+            <div class="x-coordinate">
+                <h:selectManyCheckbox value="#{clientData.x}" id="x">
+                    <f:selectItem itemValue="-5" itemLabel="-5"/>
+                    <f:selectItem itemValue="-4" itemLabel="-4"/>
+                    <f:selectItem itemValue="-3" itemLabel="-3"/>
+                    <f:selectItem itemValue="-2" itemLabel="-2"/>
+                    <f:selectItem itemValue="-1" itemLabel="-1"/>
+                    <f:selectItem itemValue="0" itemLabel="0"/>
+                    <f:selectItem itemValue="1" itemLabel="1"/>
+                </h:selectManyCheckbox>
+            </div>
+            <div class="y-coordinate">
+                <h:inputText value="#{clientData.y}" id="y" maxlength="7" validatorMessage="Координата у: неправильный формат ввода">
+                    <f:passThroughAttribute name="placeholder" value="Значение от -3 до 5"/>
+                    <f:validateDoubleRange minimum="-3" maximum="5" id="val"/>
+                    <f:ajax execute="@this" event="keyup" render="yError"/>
+                </h:inputText>
+                <h:message for="y"/>
+            </div>
+            <div class="radius">
+                <h:inputText value="#{clientData.radius}" id="radius" onchange="rewrite()" maxlength="7" validatorMessage="Радиус: неправильный формат ввода">
+                    <f:passThroughAttribute name="placeholder" value="Значение от 1 до 4"/>
+                    <f:validateDoubleRange minimum="1" maximum="4"/>
+                    <f:ajax execute="@this" event="keyup" render="radiusError"/>
+                </h:inputText>
+            </div>
+            <div class="buttons">
+                <h:commandButton value="shoot">
+                    <f:ajax execute="y radius x" listener="#{mainBean.service(clientData.x, clientData.y, clientData.radius)}" render="info-table canvas"/>
+                </h:commandButton>
+            </div>
+        </h:form>
+        <h:form id="hiddenForm" type="hidden">
+            <h:inputHidden value="#{clientData.hiddenX}" id="hiddenX" maxlength="7"/>
+            <h:inputHidden value="#{clientData.y}" id="hiddenY" maxlength="7"/>
+            <h:inputHidden value="#{clientData.radius}" id="hiddenRadius" maxlength="7"/>
+            <h:commandButton style="display: none" id="hiddenButton">
+                <f:ajax execute="hiddenX hiddenY hiddenRadius" listener="#{mainBean.service(clientData.hiddenX, clientData.y, clientData.radius)}" render="info-table canvas"/>
+            </h:commandButton>
+        </h:form>
+        <h:form id="offsetForm">
+            <h:inputHidden id="offset" value="#{historyBean.offset}"/>
+            <h:commandButton id="offsetSubmit" style="display: none">
+                <f:ajax execute="offset" render="info-table"/>
+            </h:commandButton>
+        </h:form>
+        <h:commandButton value="clear" id="clearButton">
+            <f:ajax listener="#{clearBean.clear()}" render="info-table canvas"/>
+        </h:commandButton>
+    </div>
+    <div>
+        <h:messages id="yError" style="width: 100%; margin-top:10px;color: red"/>
+        <h:messages id="radiusError" style="width: 100%; margin-top:10px;color: red"/>
+    </div>
+    <div class="canvas-container">
+        <canvas width="400px" height="400px" id="canvas"/>
+    </div>
+    <div class="table-container">
+        <h:dataTable id="info-table" value="#{historyBean.shoots}" var="shoot">
+            <h:column>
+                <f:facet name="header">X</f:facet>
+                <h:outputText value="#{shoot.x}"/>
+                <p:remoteCommand oncomplete="updatePoints()"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Y</f:facet>
+                <h:outputText value="#{shoot.y}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Radius</f:facet>
+                <h:outputText value="#{shoot.radius}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Was hit?</f:facet>
+                <h:outputText value="#{shoot.hit}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Execution time</f:facet>
+                <h:outputText value="#{shoot.executeTime} ns"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Current time</f:facet>
+                <h:outputText value="#{shoot.stringDate}"/>
+            </h:column>
+        </h:dataTable>
+    </div>
+    <div class="btn-container">
+        <h:form>
+            <h:commandButton action="toStartPage" value="На начальную страницу" class="button"/>
+        </h:form>
+    </div>
+    <h:outputScript library="js" name="canvas-painter.js"/>
+    <h:outputScript library="js" name="canvas-listener.js"/>
+    <h:outputScript library="js" name="canvas-rewriter.js"/>
+    <h:outputScript library="js" name="PointsDrawer.js"/>
+    <h:outputScript library="js" name="offset-listener.js"/>
+</h:body>
+</html>

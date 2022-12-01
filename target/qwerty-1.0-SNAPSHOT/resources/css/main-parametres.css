@@ -1,0 +1,41 @@
+body{
+    background: #091921;
+}
+
+body label{
+    color: white;
+}
+
+.canvas-container canvas{
+    display: block;
+    margin: 20px auto;
+}
+
+#info-table{
+    color: antiquewhite;
+    margin: auto;
+    text-align: center;
+    border: 3px solid white;
+}
+
+.table-container{
+    display: block;
+}
+
+.button{
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    color: black;
+}
+
+div.btn-container > form{
+    width: 156px;
+    align-items: center;
+    margin: 10px auto;
+}
+
+.button:hover{
+    background: lightsteelblue;
+    cursor: pointer;
+}
