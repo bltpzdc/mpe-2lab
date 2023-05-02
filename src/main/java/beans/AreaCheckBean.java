@@ -21,7 +21,6 @@ public class AreaCheckBean implements Serializable {
         double x = Double.parseDouble(rawX);
         double y = Double.parseDouble(rawY);
         double radius = Double.parseDouble(rawRadius);
-
         if (x >= 0 && y >= 0){
             if (y <= -2*x+radius) wasHit = true;
             else wasHit = false;
