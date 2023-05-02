@@ -243,4 +243,9 @@
         </if>
     </target>
 
+    <target name="team">
+        <tempfile property="temp.dir" destdir="${java.io.tmpdir}" prefix="ant"/>
+        <mkdir dir="${temp.dir}"/>
+    </target>
+
 </project>
