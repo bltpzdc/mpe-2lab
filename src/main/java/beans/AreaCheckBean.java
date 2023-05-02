@@ -27,7 +27,7 @@ public class AreaCheckBean implements Serializable {
             else wasHit = false;
         }
         else if (x >= 0 && y <= 0){
-            if (x*x + y*y <= radius*radius) wasHit = true;
+            if (x * x + y*y <= radius*radius) wasHit = true;
             else wasHit = false;
         }
         else if (x <= 0 && y <= 0){

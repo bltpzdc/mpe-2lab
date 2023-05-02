@@ -35,12 +35,12 @@ public class ShootingData {
 
     public String toString(){
         return "ShootingData={"+
-                "x: "+x+
-                ", y: "+y+
-                ", radius: "+radius+
-                ", hit:"+hit+
-                ", executeTime:"+executeTime+
-                ", date: "+date+"}";
+                "x: "+ x +
+                ", y: "+ y +
+                ", radius: "+ radius +
+                ", hit:"+ hit +
+                ", executeTime:"+ executeTime +
+                ", date: "+ date +"}";
     }
 
 }

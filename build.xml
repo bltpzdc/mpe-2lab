@@ -1,0 +1,214 @@
+<project name="tests" basedir=".">
+    <property file="build.properties" />
+
+    <path id="libs">
+        <fileset dir="${libs}">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
+    <target name="init">
+        <mkdir dir="${buildDir}" />
+    </target>
+
+    <target name="compile" depends="init">
+        <mkdir dir="${classes}" />
+        <javac srcdir="${srcDir}" includes="**/*.java" destdir="${classes}">
+            <classpath>
+                <path refid="libs" />
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="build" depends="compile">
+        <delete file="${war}" />
+        <mkdir dir="${build.web}" />
+        <copydir src="${webapp}" dest="${build.web}" />
+        <mkdir dir="${buildDir}/libs" />
+        <copydir src="${libs}" dest="${buildDir}/libs" />
+        <mkdir dir="${build.web.META-INF}" />
+        <mkdir dir="${build.web.WEB-INF}/classes" />
+        <copydir src="${buildDir}/classes" dest="${build.web.WEB-INF}/classes" />
+        <mkdir dir="${build.web.WEB-INF}/libs" />
+        <copydir src="${libs}" dest="${build.web.WEB-INF}/libs" />
+        <manifest file="${build.web.META-INF}/MANIFEST.MF">
+            <attribute name="Manifest-Version" value="1.0"/>
+            <attribute name="Package-version" value="${java.version}"/>
+            <attribute name="Created-By" value="${user.name}"/>
+            <attribute name="Main-class" value="MainBean"/>
+        </manifest>
+        <jar destfile="${war}"
+             basedir="${buildDir}" >
+            <manifest>
+                <attribute name="Package-version" value="${java.version}"/>
+                <attribute name="Main-class" value="MainBean.class"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="clean">
+        <delete dir="${buildDir}" />
+        <delete dir=".report" />
+    </target>
+
+    <target name="music" depends="build">
+        <sound>
+            <success source="music3.wav" />
+        </sound>
+    </target>
+
+    <target name="scp" depends="build">
+        <scp file="${war}" todir="${host}:/${path}" password="${password}" port="${port}" trust="true"/>
+    </target>
+
+    <target name="xml">
+        <xmlvalidate lenient="yes">
+            <fileset dir="${webapp}/WEB-INF" />
+            <fileset dir="${resourcesDir}" />
+        </xmlvalidate>
+        <echo>All xml files are valid.</echo>
+    </target>
+
+    <target name="native2ascii">
+        <native2ascii src="${localeDir}/native" dest="${localeDir}/transformed" encoding="UTF-16"/>
+    </target>
+
+    <target name="doc" depends="build">
+        <checksum todir="${md5}">
+            <fileset dir="${srcDir}" />
+        </checksum>
+        <checksum todir="${sha-1}" algorithm="SHA-1">
+            <fileset dir="${srcDir}" />
+        </checksum>
+
+        <loadfile property="AreaCheckBean-md5" srcfile="${md5}/beans/AreaCheckBean.java.MD5" />
+        <loadfile property="ClearBean-md5" srcfile="${md5}/beans/ClearBean.java.MD5" />
+        <loadfile property="ClientDataBean-md5" srcfile="${md5}/beans/ClientDataBean.java.MD5" />
+        <loadfile property="HistoryBean-md5" srcfile="${md5}/beans/HistoryBean.java.MD5" />
+        <loadfile property="MainBean-md5" srcfile="${md5}/beans/MainBean.java.MD5" />
+        <loadfile property="AbstractDAO-md5" srcfile="${md5}/databaseTools/AbstractDAO.java.MD5" />
+        <loadfile property="DAO-md5" srcfile="${md5}/databaseTools/DAO.java.MD5" />
+        <loadfile property="ShootingDataDAO-md5" srcfile="${md5}/databaseTools/ShootingDataDAO.java.MD5" />
+        <loadfile property="ShootingData-md5" srcfile="${md5}/utils/ShootingData.java.MD5" />
+        <loadfile property="ForDB-md5" srcfile="${md5}/utils/entities/ForDB.java.MD5" />
+
+        <loadfile property="AreaCheckBean-sha-1" srcfile="${sha-1}/beans/AreaCheckBean.java.SHA-1" />
+        <loadfile property="ClearBean-sha-1" srcfile="${sha-1}/beans/ClearBean.java.SHA-1" />
+        <loadfile property="ClientDataBean-sha-1" srcfile="${sha-1}/beans/ClientDataBean.java.SHA-1" />
+        <loadfile property="HistoryBean-sha-1" srcfile="${sha-1}/beans/HistoryBean.java.SHA-1" />
+        <loadfile property="MainBean-sha-1" srcfile="${sha-1}/beans/MainBean.java.SHA-1" />
+        <loadfile property="AbstractDAO-sha-1" srcfile="${sha-1}/databaseTools/AbstractDAO.java.SHA-1" />
+        <loadfile property="DAO-sha-1" srcfile="${sha-1}/databaseTools/DAO.java.SHA-1" />
+        <loadfile property="ShootingDataDAO-sha-1" srcfile="${sha-1}/databaseTools/ShootingDataDAO.java.SHA-1" />
+        <loadfile property="ShootingData-sha-1" srcfile="${sha-1}/utils/ShootingData.java.SHA-1" />
+        <loadfile property="ForDB-sha-1" srcfile="${sha-1}/utils/entities/ForDB.java.SHA-1" />
+
+        <manifest file="${build.web.META-INF}/MANIFEST.MF" mode="update">
+            <attribute name="AreaCheckBean-md5" value="${AreaCheckBean-md5}"/>
+            <attribute name="ClearBean-md5" value="${ClearBean-md5}"/>
+            <attribute name="ClientDataBean-md5" value="${ClientDataBean-md5}"/>
+            <attribute name="HistoryBean-md5" value="${HistoryBean-md5}"/>
+            <attribute name="MainBean-md5" value="${MainBean-md5}"/>
+            <attribute name="AbstractDAO-md5" value="${AbstractDAO-md5}"/>
+            <attribute name="DAO-md5" value="${DAO-md5}"/>
+            <attribute name="ShootingDataDAO-md5" value="${ShootingData-md5}"/>
+            <attribute name="ShootingData-md5" value="${ShootingData-md5}"/>
+            <attribute name="ForDB-md5" value="${ForDB-md5}"/>
+
+            <attribute name="AreaCheckBean-sha-1" value="${AreaCheckBean-sha-1}"/>
+            <attribute name="ClearBean-sha-1" value="${ClearBean-sha-1}"/>
+            <attribute name="ClientDataBean-sha-1" value="${ClientDataBean-sha-1}"/>
+            <attribute name="HistoryBean-sha-1" value="${HistoryBean-sha-1}"/>
+            <attribute name="MainBean-sha-1" value="${MainBean-sha-1}"/>
+            <attribute name="AbstractDAO-sha-1" value="${AbstractDAO-sha-1}"/>
+            <attribute name="DAO-sha-1" value="${DAO-sha-1}"/>
+            <attribute name="ShootingDataDAO-sha-1" value="${ShootingData-sha-1}"/>
+            <attribute name="ShootingData-sha-1" value="${ShootingData-sha-1}"/>
+            <attribute name="ForDB-sha-1" value="${ForDB-sha-1}"/>
+        </manifest>
+
+        <mkdir dir="${javaDoc}" />
+        <javadoc sourcepath="${srcDir}" destdir="${javaDoc}" author="true" version="true" use="true">
+            <classpath>
+                <path refid="libs" />
+            </classpath>
+        </javadoc>
+    </target>
+
+    <target name="env">
+        <exec dir="${wildFly.dir}" executable="${wildFly.executable}">
+            <env key="JAVA_HOME" path="${JAVA_HOME.20}" />
+            <env key="JAVA_OPTS" value="${JVM.options}" />
+        </exec>
+    </target>
+
+    <target name="alt">
+        <replaceregexp match="\b${property.oldName}\b" replace="${property.newName}" byline="true">
+            <fileset dir="${srcDir}" />
+        </replaceregexp>
+        <replaceregexp match="\b${property.oldName}\b" replace="${property.newName}" byline="true">
+            <fileset dir="${srcDir}" />
+        </replaceregexp>
+        <replaceregexp match="\b${class.oldName}\b" replace="${class.newName}" byline="true">
+            <fileset dir="${srcDir}" />
+        </replaceregexp>
+        <replaceregexp match="\b${class.oldName}\b" replace="${class.newName}" byline="true">
+            <fileset dir="${srcDir}" />
+        </replaceregexp>
+        <move file="${class.oldName.dest}" tofile="${class.newName.dest}" />
+        <antcall target="build" />
+    </target>
+
+    <target name="revert-alt">
+        <replaceregexp match="\b${property.newName}\b" replace="${property.oldName}" byline="true">
+            <fileset dir="${srcDir}" />
+        </replaceregexp>
+        <replaceregexp match="\b${property.newName}\b" replace="${property.oldName}" byline="true">
+            <fileset dir="${srcDir}" />
+        </replaceregexp>
+        <replaceregexp match="\b${class.newName}\b" replace="${class.oldName}" byline="true">
+            <fileset dir="${srcDir}" />
+        </replaceregexp>
+        <replaceregexp match="\b${class.newName}\b" replace="${class.oldName}" byline="true">
+            <fileset dir="${srcDir}" />
+        </replaceregexp>
+        <move file="${class.newName.dest}" tofile="${class.oldName.dest}" />
+        <antcall target="build" />
+    </target>
+
+    <target name="test" depends="build">
+        <mkdir dir="${buildDir}/test" />
+        <javac destdir="${buildDir}/test" srcdir="${testDir}">
+            <classpath>
+                <pathelement path="${buildDir}/classes" />
+                <pathelement path="${testDir}" />
+                <path refid="libs" />
+            </classpath>
+        </javac>
+        <mkdir dir="${buildDir}/test/report" />
+        <junit haltonfailure="yes" printsummary="on">
+            <classpath>
+                <pathelement path="${buildDir}/test" />
+                <pathelement path="${buildDir}/classes" />
+                <path refid="libs" />
+            </classpath>
+            <formatter type="xml" />
+            <batchtest todir="${buildDir}/test/report">
+                <fileset dir="${testDir}">
+                    <include name="**/*Test*" />
+                </fileset>
+            </batchtest>
+        </junit>
+    </target>
+
+    <target name="report" depends="test" if="test.okay">
+        <mkdir dir=".report"/>
+        <junitreport todir=".report">
+            <fileset dir=".report">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="noframes" todir=".report"/>
+        </junitreport>
+    </target>
+
+</project>

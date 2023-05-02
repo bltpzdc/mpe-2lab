@@ -12,6 +12,7 @@ import java.io.Serializable;
 public class ClearBean implements Serializable {
     @Inject
     private ShootingDataDAO dao;
+    private Test test;
     public void clear(){
         dao.clear();
     }

@@ -1,0 +1,29 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="MisspelledHeader" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="CUSTOM_HEADERS">
+        <header value="AbstractDAO-md5" />
+        <header value="AbstractDAO-sha-1" />
+        <header value="AreaCheckBean-md5" />
+        <header value="AreaCheckBean-sha-1" />
+        <header value="ClearBean-md5" />
+        <header value="ClearBean-sha-1" />
+        <header value="ClientDataBean-md5" />
+        <header value="ClientDataBean-sha-1" />
+        <header value="DAO-md5" />
+        <header value="DAO-sha-1" />
+        <header value="ForDB-md5" />
+        <header value="ForDB-sha-1" />
+        <header value="HistoryBean-md5" />
+        <header value="HistoryBean-sha-1" />
+        <header value="MainBean-md5" />
+        <header value="MainBean-sha-1" />
+        <header value="ShootingData-md5" />
+        <header value="ShootingData-sha-1" />
+        <header value="ShootingDataDAO-md5" />
+        <header value="ShootingDataDAO-sha-1" />
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
