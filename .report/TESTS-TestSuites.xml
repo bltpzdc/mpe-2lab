@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
-  <testsuite errors="0" failures="0" hostname="LAPTOP-UVTV9U6D" id="0" name="AreaCheckTest" package="beans" skipped="0" tests="9" time="0.076" timestamp="2023-05-03T09:14:17">
+  <testsuite errors="0" failures="0" hostname="LAPTOP-UVTV9U6D" id="0" name="AreaCheckTest" package="beans" skipped="0" tests="9" time="0.048" timestamp="2023-05-03T11:46:26">
       <properties>
           <property name="ant.library.dir" value="C:\Program Files\ANT\apache-ant-1.10.13\lib" />
 
@@ -24,7 +24,7 @@
 
           <property name="java.vendor.url" value="https://java.oracle.com/" />
 
-          <property name="class.newName.dest" value="src/main/java/beans/Aboba.java" />
+          <property name="class.newName.dest" value="src/main/java/beans/Cat.java" />
 
           <property name="sun.boot.library.path" value="C:\Program Files\JDK\jdk-20.0.1\bin" />
 
@@ -144,7 +144,7 @@
 
           <property name="build.web" value="antBuild/web" />
 
-          <property name="class.newName" value="Aboba" />
+          <property name="class.newName" value="Cat" />
 
           <property name="libs" value="libs" />
 
@@ -198,11 +198,11 @@
 
       </properties>
 
-      <testcase classname="beans.AreaCheckTest" name="checkCircleShoot" time="0.019" />
+      <testcase classname="beans.AreaCheckTest" name="checkCircleShoot" time="0.011" />
 
-      <testcase classname="beans.AreaCheckTest" name="checkMissedRectangleShoot" time="0.001" />
+      <testcase classname="beans.AreaCheckTest" name="checkMissedRectangleShoot" time="0.0" />
 
-      <testcase classname="beans.AreaCheckTest" name="checkTriangleShoot" time="0.0" />
+      <testcase classname="beans.AreaCheckTest" name="checkTriangleShoot" time="0.001" />
 
       <testcase classname="beans.AreaCheckTest" name="checkMissedTriangleShoot" time="0.0" />
 
@@ -210,7 +210,7 @@
 
       <testcase classname="beans.AreaCheckTest" name="checkRectangleShoot" time="0.0" />
 
-      <testcase classname="beans.AreaCheckTest" name="checkEmptyAreaShoot" time="0.001" />
+      <testcase classname="beans.AreaCheckTest" name="checkEmptyAreaShoot" time="0.0" />
 
       <testcase classname="beans.AreaCheckTest" name="checkMissedCircleShoot" time="0.0" />
 
