@@ -2,15 +2,18 @@ package beans;
 
 import databaseTools.AbstractDAO;
 import databaseTools.ShootingDataDAO;
+import mbeans.pointsCounter.PointsCounter;
 import utils.ShootingData;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.management.*;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import java.io.Serializable;
+import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +23,7 @@ public class MainBean implements Serializable {
     @Inject
     private AreaCheckBean areaCheckBean;
     @Inject
-    ShootingDataDAO dao;
+    private ShootingDataDAO dao;
 
     public void service(String[] x, String y, String radius){
         List<ShootingData> shootingDataList = new ArrayList<>();

@@ -1,8 +1,9 @@
 <project name="tests" basedir=".">
     <property file="build.properties" />
+    <property environment="env" />
     <taskdef resource="net/sf/antcontrib/antlib.xml">
         <classpath>
-            <pathelement location="C:/Program Files/ANT/apache-ant-1.10.13/lib/ant-contrib-1.0b3.jar" />
+            <pathelement location="${EXTERNAL_ANT}" />
         </classpath>
     </taskdef>
 
@@ -58,7 +59,7 @@
 
     <target name="music" depends="build">
         <sound>
-            <success source="music3.wav" />
+            <success source="music.wav" />
         </sound>
     </target>
 
@@ -191,29 +192,42 @@
             </classpath>
         </javac>
         <mkdir dir="${buildDir}/test/report" />
-        <junit haltonfailure="yes" printsummary="on">
+        <junit haltonfailure="yes" printsummary="on" failureproperty="test.failures">
             <classpath>
-                <pathelement path="${buildDir}/test" />
-                <pathelement path="${buildDir}/classes" />
-                <path refid="libs" />
+                <pathelement location="${buildDir}/classes"/>
+                <pathelement location="${buildDir}/*.jar"/>
+                <pathelement location="${buildDir}/test"/>
             </classpath>
-            <formatter type="xml" />
             <batchtest todir="${buildDir}/test/report">
+                <formatter type="xml" />
                 <fileset dir="${testDir}">
                     <include name="**/*Test*" />
                 </fileset>
             </batchtest>
         </junit>
+        <condition property="test.ok" value="true">
+            <not>
+                <isset property="${test.failures}"/>
+            </not>
+        </condition>
     </target>
 
-    <target name="report" depends="test" if="test.okay">
+    <target name="report" depends="test" if="test.ok">
         <mkdir dir=".report"/>
         <junitreport todir=".report">
-            <fileset dir=".report">
+            <fileset dir="${buildDir}/test/report">
                 <include name="TEST-*.xml"/>
             </fileset>
             <report format="noframes" todir=".report"/>
         </junitreport>
+        <exec executable="git">
+            <arg line="add .report/*"/>
+        </exec>
+        <exec executable="git">
+            <arg value="commit"/>
+            <arg value="-m"/>
+            <arg value="Test passed and report added."/>
+        </exec>
     </target>
 
     <target name="diff">
